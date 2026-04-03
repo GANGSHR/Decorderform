@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
@@ -49,7 +50,7 @@
     .qty-btn:hover:not(:disabled){background:var(--green-bg);color:var(--green);}
     .qty-btn:disabled{opacity:0.25;cursor:not-allowed;}
     .qty-num{min-width:38px;text-align:center;font-size:16px;font-weight:600;color:var(--text);border-left:1.5px solid var(--border);border-right:1.5px solid var(--border);height:38px;line-height:38px;user-select:none;}
-    .stock-warn{font-size:12px;color:var(--red);margin-top:6px;display:none;font-weight:500;}
+    .stock-warn{font-size:12px;color:var(--red);margin-top:6px;font-weight:500;}
     .form-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:24px 22px;margin-bottom:16px;box-shadow:var(--shadow);}
     .form-card h3{font-size:11px;letter-spacing:3px;color:var(--text-light);margin-bottom:20px;}
     .form-row{margin-bottom:18px;}
@@ -190,11 +191,10 @@
   <p class="s-foot">未主動聯繫者恕不保留，謝謝配合 🍰</p>
 </div>
 
-<!-- 隱藏 iframe，讓 form 送出不跳頁 -->
 <iframe id="hiddenFrame" name="hiddenFrame" style="display:none;"></iframe>
 
 <script>
-var SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw3ep2p1QWk9oHQrOwuQ_1tOaYB1MNcUQW9oZrgdaMZT8lGATevO6laJqYmwhl1y2qP/exec";
+var SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwmv8lwv6eHMIAUcAD2lp0Su27KYtLz_KRAJbRpHmWJ63clxtmBR3ukq8zbbPCPNt49/exec";
 
 var cakes = [];
 var cart = {};
@@ -210,13 +210,13 @@ function getRem(c) {
 
 function loadCakes() {
   fetch(SCRIPT_URL)
-    .then(function(r){ return r.json(); })
-    .then(function(data){
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
       if (!Array.isArray(data) || !data.length) throw new Error('empty');
       cakes = data;
       renderCakes();
     })
-    .catch(function(){
+    .catch(function() {
       document.getElementById('cakeWrap').innerHTML =
         '<div class="state-box">品項載入失敗，請重新整理，或直接私訊我預留。</div>';
     });
@@ -234,43 +234,43 @@ function renderCakes() {
     var rem  = getRem(c);
     var qty  = cart[c.id] || 0;
     var max  = Math.min(2, rem);
-    var descLines = String(c.desc || '').split('\\n').filter(Boolean).map(function(l){ return '<div>'+l+'</div>'; }).join('');
+    var descLines = String(c.desc || '').split('\\n').filter(Boolean)
+      .map(function(l) { return '<div>' + l + '</div>'; }).join('');
 
-    // 庫存提示：僅剩1片才顯示，不顯示「最多N片」
-    var stockNote = '';
+    // 庫存提示：只有剩1片才顯示，其他完全不顯示
+    var stockHtml = '';
     if (!sold && Number(c.limit) > 0 && rem === 1) {
-      stockNote = '<div class="stock-warn" id="sw-'+c.id+'" style="display:block;">目前庫存僅餘 1 片</div>';
-    } else {
-      stockNote = '<div class="stock-warn" id="sw-'+c.id+'"></div>';
+      stockHtml = '<div class="stock-warn">⚠ 庫存僅餘 1 片</div>';
     }
 
-    wrap.innerHTML += '<div class="cake-card'+(sold?' sold-out':'')+'" id="card-'+c.id+'">' +
-      '<div class="cake-inner">' +
-        '<div class="cake-img-wrap">' +
-          '<img src="'+(c.img||'')+'" alt="'+c.name+'" loading="lazy" onerror="this.style.display=\'none\'" />' +
-          '<div class="sold-ov"><span class="s1">售　完</span><span class="s2">SOLD OUT</span></div>' +
-        '</div>' +
-        '<div class="cake-info">' +
-          '<div class="ci-title-row">' +
-            '<span class="ci-name">'+c.name+'</span>' +
-            (c.price ? '<span class="ci-price">'+c.price+'</span>' : '') +
+    wrap.innerHTML +=
+      '<div class="cake-card' + (sold ? ' sold-out' : '') + '">' +
+        '<div class="cake-inner">' +
+          '<div class="cake-img-wrap">' +
+            '<img src="' + String(c.img || '') + '" alt="' + c.name + '" loading="lazy" />' +
+            '<div class="sold-ov"><span class="s1">售　完</span><span class="s2">SOLD OUT</span></div>' +
           '</div>' +
-          (c.sub ? '<div class="ci-sub">'+c.sub+'</div>' : '') +
-          (descLines ? '<hr class="ci-sep"/><div class="ci-desc">'+descLines+'</div>' : '') +
-          '<div class="qty-area">' +
-            '<div class="qty-row">' +
-              '<span class="qty-label">數量</span>' +
-              '<div class="qty-ctrl">' +
-                '<button class="qty-btn" onclick="changeQty(\''+c.id+'\',-1)" '+(sold||qty===0?'disabled':'')+'>−</button>' +
-                '<span class="qty-num" id="qnum-'+c.id+'">'+qty+'</span>' +
-                '<button class="qty-btn" onclick="changeQty(\''+c.id+'\',1)" '+(sold||qty>=max?'disabled':'')+'>＋</button>' +
-              '</div>' +
+          '<div class="cake-info">' +
+            '<div class="ci-title-row">' +
+              '<span class="ci-name">' + c.name + '</span>' +
+              (c.price ? '<span class="ci-price">' + c.price + '</span>' : '') +
             '</div>' +
-            stockNote +
+            (c.sub ? '<div class="ci-sub">' + c.sub + '</div>' : '') +
+            (descLines ? '<hr class="ci-sep"/><div class="ci-desc">' + descLines + '</div>' : '') +
+            '<div class="qty-area">' +
+              '<div class="qty-row">' +
+                '<span class="qty-label">數量</span>' +
+                '<div class="qty-ctrl">' +
+                  '<button class="qty-btn" onclick="changeQty(\'' + c.id + '\',-1)" ' + (sold || qty === 0 ? 'disabled' : '') + '>−</button>' +
+                  '<span class="qty-num">' + qty + '</span>' +
+                  '<button class="qty-btn" onclick="changeQty(\'' + c.id + '\',1)" ' + (sold || qty >= max ? 'disabled' : '') + '>＋</button>' +
+                '</div>' +
+              '</div>' +
+              stockHtml +
+            '</div>' +
           '</div>' +
         '</div>' +
-      '</div>' +
-    '</div>';
+      '</div>';
   });
 }
 
@@ -291,8 +291,10 @@ function changeQty(id, delta) {
 
 function onPickupChange() {
   var v = document.getElementById('fpickup').value;
-  document.getElementById('pickupAlert').style.display = v.indexOf('需先匯款') >= 0 ? 'block' : 'none';
+  document.getElementById('pickupAlert').style.display =
+    v.indexOf('需先匯款') >= 0 ? 'block' : 'none';
 }
+
 function selPack(lbl) {
   var opts = document.querySelectorAll('.pack-opt');
   for (var i = 0; i < opts.length; i++) opts[i].classList.remove('active');
@@ -321,6 +323,7 @@ document.getElementById('orderForm').addEventListener('submit', function(e) {
   var cartItems = [];
   var totalQty = 0;
   var totalAmount = 0;
+
   for (var k = 0; k < cartKeys.length; k++) {
     var kid = cartKeys[k];
     var qty = cart[kid];
@@ -329,9 +332,8 @@ document.getElementById('orderForm').addEventListener('submit', function(e) {
       if (String(cakes[ci].id) === String(kid)) { cc = cakes[ci]; break; }
     }
     if (cc) {
-      items.push(cc.name + ' x' + qty);
-      // 取出價格數字（去掉 $ 符號）
       var priceNum = parseInt(String(cc.price || '0').replace(/[^0-9]/g, '')) || 0;
+      items.push(cc.name + ' x' + qty);
       if (qty > 1) {
         itemsWithPrice.push(cc.name + ' $' + priceNum + ' x' + qty);
       } else {
@@ -341,6 +343,12 @@ document.getElementById('orderForm').addEventListener('submit', function(e) {
       cartItems.push({ id: kid, qty: qty });
       totalQty += qty;
     }
+  }
+
+  // 加購外帶盒加入價格
+  if (pack.value.indexOf('加購') >= 0) {
+    itemsWithPrice.push('加購外帶盒 $10');
+    totalAmount += 10;
   }
 
   var payNote = totalQty >= 4 ? '首次達4片需先付款' : '';
@@ -362,7 +370,6 @@ document.getElementById('orderForm').addEventListener('submit', function(e) {
     cartItems: cartItems
   });
 
-  // 用 hidden form + iframe 送出，完全繞過 CORS
   var f = document.createElement('form');
   f.method = 'POST';
   f.action = SCRIPT_URL;
@@ -377,7 +384,6 @@ document.getElementById('orderForm').addEventListener('submit', function(e) {
   f.submit();
   document.body.removeChild(f);
 
-  // 等 2 秒讓 iframe 完成，再跳頁
   setTimeout(function() {
     document.getElementById('mainView').style.display = 'none';
     document.getElementById('successPage').classList.add('show');
