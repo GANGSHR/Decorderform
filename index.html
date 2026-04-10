@@ -20,6 +20,8 @@
     .wrap{max-width:740px;margin:0 auto;padding:28px 16px 70px;}
     .notice{background:var(--green-bg);border:1px solid var(--green-soft);border-radius:var(--radius);padding:15px 20px;font-size:13px;color:var(--text-mid);line-height:2.1;margin-bottom:32px;}
     .notice strong{color:var(--green);}
+    .min-notice{background:#fffbee;border:1px solid #e8d9a0;border-radius:var(--radius);padding:13px 20px;font-size:13px;color:#7a6030;line-height:2;margin-bottom:28px;}
+    .min-notice strong{color:#b8860b;}
     .sec-head{font-size:11px;letter-spacing:4px;color:var(--text-light);margin-bottom:16px;padding-left:2px;}
     .state-box{text-align:center;padding:48px 20px;color:var(--text-light);font-size:14px;}
     .spinner{display:inline-block;width:26px;height:26px;border:3px solid var(--green-soft);border-top-color:var(--green);border-radius:50%;animation:spin .8s linear infinite;margin-bottom:10px;}
@@ -60,6 +62,7 @@
     .form-row input:focus,.form-row select:focus{border-color:var(--green-mid);box-shadow:0 0 0 3px rgba(138,171,122,0.15);}
     .sel-wrap{position:relative;}
     .sel-wrap::after{content:'▾';position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--text-light);pointer-events:none;}
+    .pickup-hint{margin-top:7px;font-size:12px;color:var(--text-light);line-height:1.7;}
     .pickup-alert{display:none;margin-top:7px;padding:8px 12px;background:#fdf8ee;border:1px solid #e8cfa0;border-radius:6px;font-size:12px;color:#8a6030;}
     .pack-opts{display:flex;flex-direction:column;gap:10px;}
     .pack-opt{border:1.5px solid var(--border);border-radius:8px;padding:12px 16px;cursor:pointer;background:var(--bg);user-select:none;transition:border-color .2s,background .2s;}
@@ -99,17 +102,23 @@
 </head>
 <body>
 <header class="header">
-  <h1>4月11日切片蛋糕預留</h1>
+  <h1>切片蛋糕預留</h1>
   <p class="header-sub">軟開放預留中</p>
 </header>
 
 <div class="wrap" id="mainView">
   <div class="notice">
     📋 <strong>預留須知</strong><br>
+    ・<strong>預留需滿 2 片以上</strong>，不滿 2 片歡迎當日現場選購<br>
     ・每人每款上限預留 <strong>2 片</strong><br>
-    ・自取時段 <strong>13:30 – 18:00</strong>，逾 16:30 需<strong>先匯款</strong><br>
+    ・自取時段 <strong>13:30 – 16:30</strong>，逾 16:00 需<strong>先匯款</strong><br>
     ・<strong>首次預留達 4 片以上</strong>，請先完成付款再確認<br>
     ・請自備<strong>保冷劑及保冷袋</strong>取貨
+  </div>
+
+  <div class="min-notice">
+    🍰 為維護包裝與人力成本，預留服務需滿 <strong>2 片（含）以上</strong>。<br>
+    若不滿 2 片，歡迎當日營業時間至現場選購。
   </div>
 
   <p class="sec-head">選擇品項</p>
@@ -137,9 +146,10 @@
             <option value="">請選擇時段</option>
             <option value="13:30～14:30">13:30 ～ 14:30</option>
             <option value="14:30～15:30">14:30 ～ 15:30</option>
-            <option value="15:30～16:30">15:30 ～ 16:30</option>
-            </select>
+            <option value="15:30～16:30">15:30 ～ 16:30</option
+          </select>
         </div>
+        <div class="pickup-hint">⏰ 如自取時段不確定，建議當日至現場選購，恕無法接受時段不確定之預留。</div>
         <div class="pickup-alert" id="pickupAlert">⚠️ 此時段需要<strong>提前匯款</strong>，請送出後主動傳訊息確認。</div>
         <div class="err" id="fpickupErr">請選擇自取時段</div>
       </div>
@@ -315,6 +325,16 @@ document.getElementById('orderForm').addEventListener('submit', function(e) {
 
   var cartKeys = Object.keys(cart);
   if (cartKeys.length === 0) { alert('請先選擇至少一款甜點的數量！'); return; }
+
+  // 計算總片數，不足2片擋下
+  var preTotal = 0;
+  for (var pk = 0; pk < cartKeys.length; pk++) { preTotal += cart[cartKeys[pk]]; }
+  if (preTotal < 2) {
+    alert('預留服務需滿 2 片以上。\n\n若不滿 2 片，歡迎當日營業時間至現場選購，謝謝！');
+    btn.disabled = false;
+    btn.textContent = '送出預留單';
+    return;
+  }
 
   var btn = document.getElementById('submitBtn');
   btn.disabled = true;
