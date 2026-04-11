@@ -14,20 +14,33 @@
     }
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
     body{background:var(--bg);font-family:'Noto Sans TC',sans-serif;color:var(--text);min-height:100vh;}
+
+    /* Header */
     .header{background:var(--bg);border-bottom:1.5px solid var(--border);padding:26px 20px 20px;text-align:center;}
     .header h1{font-family:'Noto Serif TC',serif;font-size:clamp(20px,4vw,26px);font-weight:500;letter-spacing:5px;color:var(--green);}
     .header-sub{margin-top:5px;font-size:12px;color:var(--text-light);letter-spacing:2px;}
-    .wrap{max-width:740px;margin:0 auto;padding:28px 16px 70px;}
-    .notice{background:var(--green-bg);border:1px solid var(--green-soft);border-radius:var(--radius);padding:15px 20px;font-size:13px;color:var(--text-mid);line-height:2.1;margin-bottom:32px;}
+
+    /* Wrap */
+    .wrap{max-width:740px;margin:0 auto;padding:28px 16px 140px;}
+
+    /* Notice */
+    .notice{background:var(--green-bg);border:1px solid var(--green-soft);border-radius:var(--radius);padding:15px 20px;font-size:13px;color:var(--text-mid);line-height:2.1;margin-bottom:16px;}
     .notice strong{color:var(--green);}
     .min-notice{background:#fffbee;border:1px solid #e8d9a0;border-radius:var(--radius);padding:13px 20px;font-size:13px;color:#7a6030;line-height:2;margin-bottom:28px;}
     .min-notice strong{color:#b8860b;}
+
+    /* Section */
     .sec-head{font-size:11px;letter-spacing:4px;color:var(--text-light);margin-bottom:16px;padding-left:2px;}
+
+    /* Loading */
     .state-box{text-align:center;padding:48px 20px;color:var(--text-light);font-size:14px;}
     .spinner{display:inline-block;width:26px;height:26px;border:3px solid var(--green-soft);border-top-color:var(--green);border-radius:50%;animation:spin .8s linear infinite;margin-bottom:10px;}
     @keyframes spin{to{transform:rotate(360deg);}}
+
+    /* Cake cards */
     .cake-wrap{display:flex;flex-direction:column;gap:20px;margin-bottom:36px;}
-    .cake-card{border:1.5px solid var(--border);border-radius:var(--radius);overflow:hidden;background:var(--surface);box-shadow:var(--shadow);}
+    .cake-card{border:1.5px solid var(--border);border-radius:var(--radius);overflow:hidden;background:var(--surface);box-shadow:var(--shadow);transition:border-color .2s;}
+    .cake-card.selected{border-color:var(--green-mid);}
     .cake-card.sold-out{opacity:0.72;}
     .cake-inner{display:grid;grid-template-columns:1fr 1fr;}
     .cake-img-wrap{position:relative;overflow:hidden;background:#edeae4;min-height:240px;}
@@ -36,6 +49,11 @@
     .cake-card.sold-out .sold-ov{display:flex;}
     .sold-ov .s1{font-family:'Noto Serif TC',serif;font-size:26px;color:#fff;letter-spacing:5px;}
     .sold-ov .s2{font-size:12px;color:rgba(255,255,255,0.75);letter-spacing:3px;}
+
+    /* Selected badge */
+    .selected-badge{display:none;position:absolute;top:10px;left:10px;background:var(--green);color:#fff;font-size:12px;padding:3px 10px;border-radius:20px;font-weight:600;letter-spacing:1px;}
+    .cake-card.selected .selected-badge{display:block;}
+
     .cake-info{padding:20px 22px;display:flex;flex-direction:column;gap:10px;background:var(--bg);}
     .ci-title-row{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;}
     .ci-name{font-family:'Noto Serif TC',serif;font-size:15px;font-weight:500;color:var(--text);letter-spacing:2px;}
@@ -52,6 +70,28 @@
     .qty-btn:disabled{opacity:0.25;cursor:not-allowed;}
     .qty-num{min-width:38px;text-align:center;font-size:16px;font-weight:600;color:var(--text);border-left:1.5px solid var(--border);border-right:1.5px solid var(--border);height:38px;line-height:38px;user-select:none;}
     .stock-warn{font-size:12px;color:var(--red);margin-top:6px;font-weight:500;}
+
+    /* ── 購物車固定底部 ── */
+    .cart-bar{
+      position:fixed;bottom:0;left:0;right:0;
+      background:#fff;border-top:1.5px solid var(--border);
+      box-shadow:0 -4px 20px rgba(80,110,60,0.10);
+      z-index:100;
+      transform:translateY(100%);
+      transition:transform .3s ease;
+    }
+    .cart-bar.visible{transform:translateY(0);}
+    .cart-bar-inner{max-width:740px;margin:0 auto;padding:12px 16px;display:flex;align-items:center;gap:12px;}
+    .cart-summary{flex:1;}
+    .cart-summary-title{font-size:11px;letter-spacing:2px;color:var(--text-light);margin-bottom:3px;}
+    .cart-items-list{font-size:13px;color:var(--text-mid);line-height:1.6;}
+    .cart-total{font-size:15px;font-weight:600;color:var(--green);white-space:nowrap;}
+    .cart-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;}
+    .cart-chip{background:var(--green-bg);border:1px solid var(--green-soft);border-radius:20px;padding:3px 10px;font-size:12px;color:var(--green);font-weight:500;}
+    .btn-to-form{background:var(--green);color:#fff;border:none;border-radius:8px;padding:10px 20px;font-size:13px;font-family:'Noto Sans TC',sans-serif;cursor:pointer;white-space:nowrap;font-weight:500;}
+    .btn-to-form:hover{background:#5a7b4e;}
+
+    /* Form */
     .form-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:24px 22px;margin-bottom:16px;box-shadow:var(--shadow);}
     .form-card h3{font-size:11px;letter-spacing:3px;color:var(--text-light);margin-bottom:20px;}
     .form-row{margin-bottom:18px;}
@@ -71,51 +111,79 @@
     .pack-opt input{display:none;}
     .pack-opt-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:2px;}
     .pack-opt-sub{font-size:11px;color:var(--text-light);line-height:1.6;}
+
+    /* Order summary in form */
+    .order-summary{background:var(--green-bg);border:1px solid var(--green-soft);border-radius:10px;padding:14px 16px;margin-bottom:16px;}
+    .order-summary-title{font-size:11px;letter-spacing:3px;color:var(--text-light);margin-bottom:10px;}
+    .order-summary-row{display:flex;justify-content:space-between;font-size:13px;color:var(--text-mid);padding:4px 0;border-bottom:1px dashed var(--border);}
+    .order-summary-row:last-child{border-bottom:none;}
+    .order-summary-name{flex:1;}
+    .order-summary-price{color:var(--green);font-weight:500;white-space:nowrap;margin-left:10px;}
+    .order-total-row{display:flex;justify-content:space-between;margin-top:10px;padding-top:10px;border-top:1.5px solid var(--green-soft);font-size:14px;font-weight:600;color:var(--green);}
+
+    /* Strips */
     .cold-strip{background:var(--green-bg);border:1px solid var(--green-soft);border-radius:var(--radius);padding:13px 16px;font-size:13px;color:var(--text-mid);line-height:1.8;margin-bottom:14px;display:flex;gap:10px;align-items:flex-start;}
     .confirm-note{background:#fdf9ee;border:1px solid #e8d9a0;border-radius:var(--radius);padding:13px 16px;font-size:12.5px;color:#7a6030;line-height:1.9;margin-bottom:16px;display:flex;gap:10px;align-items:flex-start;}
     .strip-ico{flex-shrink:0;font-size:16px;}
+
+    /* Submit */
     .btn-submit{display:block;width:100%;padding:15px;background:var(--green);color:#fff;border:none;border-radius:10px;font-family:'Noto Sans TC',sans-serif;font-size:14px;letter-spacing:3px;cursor:pointer;transition:background .2s,transform .15s;box-shadow:0 4px 14px rgba(107,143,94,.28);}
     .btn-submit:hover{background:#5a7b4e;transform:translateY(-1px);}
     .btn-submit:disabled{background:var(--text-light);cursor:not-allowed;transform:none;box-shadow:none;}
     .err{font-size:11px;color:var(--red);margin-top:5px;display:none;}
+
+    /* Success page */
     .success-page{display:none;min-height:85vh;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:48px 24px;}
     .success-page.show{display:flex;}
     .s-icon{font-size:54px;margin-bottom:18px;}
     .success-page h2{font-family:'Noto Serif TC',serif;font-size:22px;font-weight:500;letter-spacing:3px;color:var(--green);margin-bottom:10px;}
-    .s-sub{font-size:13px;color:var(--text-mid);line-height:2.2;margin-bottom:26px;max-width:300px;}
+    .s-sub{font-size:13px;color:var(--text-mid);line-height:2.2;margin-bottom:20px;max-width:320px;}
     .s-sub strong{color:var(--text);}
-    .s-divider{width:50px;height:1.5px;background:var(--green-soft);margin:0 auto 22px;}
+
+    /* 成功頁訂單摘要 */
+    .s-order-box{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin-bottom:22px;width:100%;max-width:340px;text-align:left;}
+    .s-order-box-title{font-size:11px;letter-spacing:3px;color:var(--text-light);margin-bottom:10px;}
+    .s-order-row{display:flex;justify-content:space-between;font-size:13px;color:var(--text-mid);padding:4px 0;border-bottom:1px dashed var(--border);}
+    .s-order-row:last-child{border-bottom:none;}
+    .s-order-total{display:flex;justify-content:space-between;margin-top:10px;padding-top:8px;border-top:1.5px solid var(--green-soft);font-size:14px;font-weight:600;color:var(--green);}
+    .s-note{font-size:12px;color:var(--text-light);background:var(--green-bg);border-radius:8px;padding:10px 14px;margin-bottom:22px;max-width:340px;line-height:1.8;text-align:left;}
+
+    .s-divider{width:50px;height:1.5px;background:var(--green-soft);margin:0 auto 18px;}
     .s-cta-label{font-size:11px;letter-spacing:3px;color:var(--text-light);margin-bottom:14px;}
     .cta-links{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
     .cta-link{display:inline-flex;align-items:center;gap:7px;padding:13px 28px;border-radius:10px;font-size:14px;font-weight:500;text-decoration:none;font-family:'Noto Sans TC',sans-serif;transition:opacity .2s,transform .15s;box-shadow:0 3px 12px rgba(0,0,0,.12);}
     .cta-link:hover{opacity:.87;transform:translateY(-2px);}
     .cta-link.fb{background:#1877f2;color:#fff;}
     .cta-link.ln{background:#06c755;color:#fff;}
-    .s-foot{margin-top:20px;font-size:12px;color:var(--text-light);line-height:1.9;}
+    .s-foot{margin-top:16px;font-size:12px;color:var(--text-light);line-height:1.9;}
+
     @media(max-width:580px){
       .cake-inner{grid-template-columns:1fr;}
       .cake-img-wrap{min-height:0;height:72vw;max-height:360px;}
       .cake-info{padding:16px;}
       .ci-name{font-size:14px;}
+      .cart-bar-inner{flex-direction:column;align-items:stretch;gap:8px;}
+      .btn-to-form{width:100%;text-align:center;}
     }
   </style>
 </head>
 <body>
+
 <header class="header">
   <h1>切片蛋糕預留</h1>
   <p class="header-sub">軟開放預留中</p>
 </header>
 
+<!-- ── 主頁面 ── -->
 <div class="wrap" id="mainView">
   <div class="notice">
     📋 <strong>預留須知</strong><br>
     ・<strong>預留需滿 2 片以上</strong>，不滿 2 片歡迎當日現場選購<br>
     ・每人每款上限預留 <strong>2 片</strong><br>
-    ・自取時段 <strong>13:30 – 16:30</strong>，逾 16:00 需<strong>先匯款</strong><br>
+    ・自取時段 <strong>13:30 – 18:00</strong>，逾 17:00 需<strong>先匯款</strong><br>
     ・<strong>首次預留達 4 片以上</strong>，請先完成付款再確認<br>
     ・請自備<strong>保冷劑及保冷袋</strong>取貨
   </div>
-
   <div class="min-notice">
     🍰 為維護包裝與人力成本，預留服務需滿 <strong>2 片（含）以上</strong>。<br>
     若不滿 2 片，歡迎當日營業時間至現場選購。
@@ -147,9 +215,10 @@
             <option value="13:30～14:30">13:30 ～ 14:30</option>
             <option value="14:30～15:30">14:30 ～ 15:30</option>
             <option value="15:30～16:30">15:30 ～ 16:30</option>
+            <option value="17:00～18:00（需先匯款）">17:00 ～ 18:00</option>
           </select>
         </div>
-        <div class="pickup-hint">⏰ 如自取時段不確定，建議當日至現場選購。</div>
+        <div class="pickup-hint">⏰ 如自取時段不確定，建議當日至現場選購，恕無法接受時段不確定之預留。</div>
         <div class="pickup-alert" id="pickupAlert">⚠️ 此時段需要<strong>提前匯款</strong>，請送出後主動傳訊息確認。</div>
         <div class="err" id="fpickupErr">請選擇自取時段</div>
       </div>
@@ -170,6 +239,17 @@
         <div class="err" id="fpackErr">請選擇包裝方式</div>
       </div>
     </div>
+
+    <!-- 訂單摘要（表單內） -->
+    <div class="order-summary" id="orderSummary" style="display:none;">
+      <div class="order-summary-title">您的訂購明細</div>
+      <div id="summaryRows"></div>
+      <div class="order-total-row">
+        <span>預估總金額</span>
+        <span id="summaryTotal">$0</span>
+      </div>
+    </div>
+
     <div class="cold-strip">
       <span class="strip-ico">🧊</span>
       <div>請記得<strong>自備保冷劑及保冷袋</strong>前來取貨，確保甜點在最佳狀態！</div>
@@ -178,18 +258,35 @@
       <span class="strip-ico">📩</span>
       <div>由於可能有多人同時預留，<strong>確切的預留數量將以私訊回覆為主</strong>，請送出後主動聯繫確認。</div>
     </div>
+
     <button type="submit" class="btn-submit" id="submitBtn">送出預留單</button>
   </form>
 </div>
 
+<!-- ── 成功頁面 ── -->
 <div class="success-page" id="successPage">
   <div class="s-icon">🌿</div>
   <h2>預留單已送出！</h2>
   <p class="s-sub">
     請主動傳訊息給我，並告知您的<br>
     <strong>訂購大名</strong><br>
-    我回覆確認後才算完成預留，感謝您 🙏
+    我回覆確認後才算完成預留 🙏
   </p>
+
+  <!-- 訂單摘要 -->
+  <div class="s-order-box" id="successOrderBox">
+    <div class="s-order-box-title">您的訂購明細</div>
+    <div id="successOrderRows"></div>
+    <div class="s-order-total">
+      <span>預估總金額</span>
+      <span id="successTotal"></span>
+    </div>
+  </div>
+
+  <div class="s-note">
+    ⚠️ 以上金額僅供參考，確切預留數量與金額將以<strong>私訊回覆為主</strong>，請務必主動聯繫確認。
+  </div>
+
   <div class="s-divider"></div>
   <p class="s-cta-label">點下方按鈕前往私訊</p>
   <div class="cta-links">
@@ -197,6 +294,20 @@
     <a class="cta-link ln" href="https://lin.ee/UoNQoWp" target="_blank">💬 LINE 私訊</a>
   </div>
   <p class="s-foot">未主動聯繫者恕不保留，謝謝配合 🍰</p>
+</div>
+
+<!-- 購物車底部欄 -->
+<div class="cart-bar" id="cartBar">
+  <div class="cart-bar-inner">
+    <div class="cart-summary">
+      <div class="cart-summary-title">目前選購</div>
+      <div class="cart-chips" id="cartChips"></div>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;flex-shrink:0;">
+      <span class="cart-total" id="cartTotal">$0</span>
+      <button class="btn-to-form" onclick="scrollToForm()">填寫資料 ↓</button>
+    </div>
+  </div>
 </div>
 
 <iframe id="hiddenFrame" name="hiddenFrame" style="display:none;"></iframe>
@@ -215,6 +326,9 @@ function getRem(c) {
   if (Number(c.limit) <= 0) return 99;
   return Math.max(0, Number(c.limit) - Number(c.sold));
 }
+function getPrice(c) {
+  return parseInt(String(c.price || '0').replace(/[^0-9]/g, '')) || 0;
+}
 
 function loadCakes() {
   fetch(SCRIPT_URL)
@@ -232,31 +346,28 @@ function loadCakes() {
 
 function renderCakes() {
   var wrap = document.getElementById('cakeWrap');
+  wrap.innerHTML = '';
   if (!cakes.length) {
     wrap.innerHTML = '<div class="state-box">目前尚無開放品項。</div>';
     return;
   }
-  wrap.innerHTML = '';
   cakes.forEach(function(c) {
     var sold = isSold(c);
     var rem  = getRem(c);
     var qty  = cart[c.id] || 0;
     var max  = Math.min(2, rem);
     var descLines = String(c.desc || '').split('\\n').filter(Boolean)
-      .map(function(l) { return '<div>' + l + '</div>'; }).join('');
-
-    // 庫存提示：只有剩1片才顯示，其他完全不顯示
-    var stockHtml = '';
-    if (!sold && Number(c.limit) > 0 && rem === 1) {
-      stockHtml = '<div class="stock-warn">⚠ 庫存僅餘 1 片</div>';
-    }
+      .map(function(l){ return '<div>' + l + '</div>'; }).join('');
+    var stockHtml = (!sold && Number(c.limit) > 0 && rem === 1)
+      ? '<div class="stock-warn">⚠ 庫存僅餘 1 片</div>' : '';
 
     wrap.innerHTML +=
-      '<div class="cake-card' + (sold ? ' sold-out' : '') + '">' +
+      '<div class="cake-card' + (sold ? ' sold-out' : '') + (qty > 0 ? ' selected' : '') + '" id="card-' + c.id + '">' +
         '<div class="cake-inner">' +
           '<div class="cake-img-wrap">' +
             '<img src="' + String(c.img || '') + '" alt="' + c.name + '" loading="lazy" />' +
             '<div class="sold-ov"><span class="s1">售　完</span><span class="s2">SOLD OUT</span></div>' +
+            '<div class="selected-badge">已選 ✓</div>' +
           '</div>' +
           '<div class="cake-info">' +
             '<div class="ci-title-row">' +
@@ -280,6 +391,7 @@ function renderCakes() {
         '</div>' +
       '</div>';
   });
+  updateCart();
 }
 
 function changeQty(id, delta) {
@@ -288,8 +400,7 @@ function changeQty(id, delta) {
     if (String(cakes[i].id) === String(id)) { c = cakes[i]; break; }
   }
   if (!c || isSold(c)) return;
-  var rem = getRem(c);
-  var max = Math.min(2, rem);
+  var max = Math.min(2, getRem(c));
   var q = (cart[id] || 0) + delta;
   if (q < 0) q = 0;
   if (q > max) q = max;
@@ -297,12 +408,65 @@ function changeQty(id, delta) {
   renderCakes();
 }
 
+function updateCart() {
+  var keys = Object.keys(cart);
+  var total = 0;
+  var chips = '';
+  var summaryRows = '';
+  var successRows = '';
+
+  for (var k = 0; k < keys.length; k++) {
+    var kid = keys[k];
+    var qty = cart[kid];
+    var cc = null;
+    for (var i = 0; i < cakes.length; i++) {
+      if (String(cakes[i].id) === String(kid)) { cc = cakes[i]; break; }
+    }
+    if (!cc) continue;
+    var p = getPrice(cc);
+    var sub = p * qty;
+    total += sub;
+    chips += '<span class="cart-chip">' + cc.name + ' ×' + qty + '</span>';
+    var rowLabel = cc.name + (qty > 1 ? ' ×' + qty : '');
+    summaryRows += '<div class="order-summary-row"><span class="order-summary-name">' + rowLabel + '</span><span class="order-summary-price">$' + sub + '</span></div>';
+    successRows += '<div class="s-order-row"><span>' + rowLabel + '</span><span>$' + sub + '</span></div>';
+  }
+
+  // 購物車底部欄
+  var cartBar = document.getElementById('cartBar');
+  if (keys.length > 0) {
+    cartBar.classList.add('visible');
+    document.getElementById('cartChips').innerHTML = chips;
+    document.getElementById('cartTotal').textContent = '$' + total;
+  } else {
+    cartBar.classList.remove('visible');
+  }
+
+  // 表單內訂單摘要
+  var summary = document.getElementById('orderSummary');
+  if (keys.length > 0) {
+    summary.style.display = 'block';
+    document.getElementById('summaryRows').innerHTML = summaryRows;
+    document.getElementById('summaryTotal').textContent = '$' + total;
+  } else {
+    summary.style.display = 'none';
+  }
+
+  // 成功頁訂單摘要（先存起來，送出後填入）
+  window._successRows = successRows;
+  window._successTotal = total;
+}
+
+function scrollToForm() {
+  var form = document.getElementById('orderForm');
+  form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
 function onPickupChange() {
   var v = document.getElementById('fpickup').value;
   document.getElementById('pickupAlert').style.display =
     v.indexOf('需先匯款') >= 0 ? 'block' : 'none';
 }
-
 function selPack(lbl) {
   var opts = document.querySelectorAll('.pack-opt');
   for (var i = 0; i < opts.length; i++) opts[i].classList.remove('active');
@@ -310,6 +474,7 @@ function selPack(lbl) {
   lbl.querySelector('input').checked = true;
 }
 
+// ── Submit ──
 document.getElementById('orderForm').addEventListener('submit', function(e) {
   e.preventDefault();
   var name  = document.getElementById('fname').value.trim();
@@ -326,13 +491,10 @@ document.getElementById('orderForm').addEventListener('submit', function(e) {
   var cartKeys = Object.keys(cart);
   if (cartKeys.length === 0) { alert('請先選擇至少一款甜點的數量！'); return; }
 
-  // 計算總片數，不足2片擋下
   var preTotal = 0;
-  for (var pk = 0; pk < cartKeys.length; pk++) { preTotal += cart[cartKeys[pk]]; }
+  for (var pk = 0; pk < cartKeys.length; pk++) preTotal += cart[cartKeys[pk]];
   if (preTotal < 2) {
     alert('預留服務需滿 2 片以上。\n\n若不滿 2 片，歡迎當日營業時間至現場選購，謝謝！');
-    btn.disabled = false;
-    btn.textContent = '送出預留單';
     return;
   }
 
@@ -340,14 +502,10 @@ document.getElementById('orderForm').addEventListener('submit', function(e) {
   btn.disabled = true;
   btn.textContent = '確認庫存中…';
 
-  // ── 送出前重新向 Google Sheet 確認最新庫存 ──
   fetch(SCRIPT_URL)
     .then(function(r) { return r.json(); })
     .then(function(freshCakes) {
-      // 用最新資料驗證每個購物車品項
       var problems = [];
-      var adjusted = false;
-
       for (var k = 0; k < cartKeys.length; k++) {
         var kid = cartKeys[k];
         var wantQty = cart[kid];
@@ -356,105 +514,82 @@ document.getElementById('orderForm').addEventListener('submit', function(e) {
           if (String(freshCakes[i].id) === String(kid)) { fresh = freshCakes[i]; break; }
         }
         if (!fresh) continue;
-
         var freshSold = Number(fresh.sold) || 0;
         var freshLimit = Number(fresh.limit) || 0;
         var freshManual = String(fresh.manualClose).toUpperCase() === 'TRUE';
         var freshRem = freshLimit > 0 ? Math.max(0, freshLimit - freshSold) : 99;
-
         if (freshManual || (freshLimit > 0 && freshSold >= freshLimit)) {
-          // 完全售完
-          problems.push('・「' + fresh.name + '」剛剛已售完，已從您的訂單中移除');
+          problems.push('・「' + fresh.name + '」剛剛已售完，已從訂單中移除');
           delete cart[kid];
-          adjusted = true;
-          // 更新本地資料
           for (var j = 0; j < cakes.length; j++) {
-            if (String(cakes[j].id) === String(kid)) {
-              cakes[j].sold = freshSold;
-              cakes[j].manualClose = freshManual;
-              break;
-            }
+            if (String(cakes[j].id) === String(kid)) { cakes[j].sold = freshSold; cakes[j].manualClose = freshManual; break; }
           }
         } else if (wantQty > freshRem) {
-          // 數量不夠
-          problems.push('・「' + fresh.name + '」庫存僅剩 ' + freshRem + ' 片，已幫您調整數量');
+          problems.push('・「' + fresh.name + '」庫存僅剩 ' + freshRem + ' 片，已調整數量');
           cart[kid] = freshRem;
-          adjusted = true;
           for (var j = 0; j < cakes.length; j++) {
-            if (String(cakes[j].id) === String(kid)) {
-              cakes[j].sold = freshSold;
-              break;
-            }
+            if (String(cakes[j].id) === String(kid)) { cakes[j].sold = freshSold; break; }
           }
         }
       }
-
-      // 如果有問題，通知客人並重新渲染
       if (problems.length > 0) {
         btn.disabled = false;
         btn.textContent = '送出預留單';
         renderCakes();
-        // 檢查購物車是否還有東西
         if (Object.keys(cart).length === 0) {
           alert('很抱歉，您選購的品項已全數售完，請重新選擇。\n\n' + problems.join('\n'));
         } else {
-          alert('庫存有異動，請確認以下變更後重新送出：\n\n' + problems.join('\n') + '\n\n請確認剩餘品項後再按送出。');
+          alert('庫存有異動，請確認以下變更後重新送出：\n\n' + problems.join('\n') + '\n\n請確認後再按送出。');
         }
         return;
       }
-
-      // 庫存確認沒問題，正式送出
-      submitOrder(name, phone, pu, pack, btn);
+      doSubmit(name, phone, pu, pack, btn);
     })
     .catch(function() {
-      // 無法確認庫存時，仍然允許送出（網路問題不應擋住客人）
-      submitOrder(name, phone, pu, pack, btn);
+      doSubmit(name, phone, pu, pack, btn);
     });
 });
 
-function submitOrder(name, phone, pu, pack, btn) {
+function doSubmit(name, phone, pu, pack, btn) {
   btn.textContent = '傳送中…';
-
   var cartKeys = Object.keys(cart);
-  var items = [];
-  var itemsWithPrice = [];
-  var cartItems = [];
-  var totalQty = 0;
-  var totalAmount = 0;
+  var items = [], itemsWithPrice = [], cartItems = [];
+  var totalQty = 0, totalAmount = 0;
+  var successRows = '', successPack = '';
 
   for (var k = 0; k < cartKeys.length; k++) {
     var kid = cartKeys[k];
     var qty = cart[kid];
     var cc = null;
-    for (var ci = 0; ci < cakes.length; ci++) {
-      if (String(cakes[ci].id) === String(kid)) { cc = cakes[ci]; break; }
+    for (var i = 0; i < cakes.length; i++) {
+      if (String(cakes[i].id) === String(kid)) { cc = cakes[i]; break; }
     }
-    if (cc) {
-      var priceNum = parseInt(String(cc.price || '0').replace(/[^0-9]/g, '')) || 0;
-      items.push(cc.name + ' x' + qty);
-      if (qty > 1) {
-        itemsWithPrice.push(cc.name + ' $' + priceNum + ' x' + qty);
-      } else {
-        itemsWithPrice.push(cc.name + ' $' + priceNum);
-      }
-      totalAmount += priceNum * qty;
-      cartItems.push({ id: kid, qty: qty });
-      totalQty += qty;
-    }
+    if (!cc) continue;
+    var p = getPrice(cc);
+    var sub = p * qty;
+    items.push(cc.name + ' x' + qty);
+    itemsWithPrice.push(cc.name + ' $' + p + (qty > 1 ? ' x' + qty : ''));
+    totalAmount += sub;
+    cartItems.push({ id: kid, qty: qty });
+    totalQty += qty;
+    successRows += '<div class="s-order-row"><span>' + cc.name + (qty > 1 ? ' ×' + qty : '') + '</span><span>$' + sub + '</span></div>';
   }
 
   if (pack.value.indexOf('加購') >= 0) {
     itemsWithPrice.push('加購外帶盒 $10');
     totalAmount += 10;
+    successPack = '<div class="s-order-row"><span>加購外帶盒</span><span>$10</span></div>';
   }
 
   var payNote = totalQty >= 4 ? '首次達4片需先付款' : '';
 
+  // 填入成功頁訂單摘要
+  document.getElementById('successOrderRows').innerHTML = successRows + successPack;
+  document.getElementById('successTotal').textContent = '$' + totalAmount;
+
   var payload = JSON.stringify({
     timestamp: new Date().toLocaleString('zh-TW'),
-    name: name,
-    phone: phone,
-    pickup: pu,
+    name: name, phone: phone, pickup: pu,
     packaging: pack.value,
     items: items.join('、'),
     itemsWithPrice: itemsWithPrice.join('、'),
@@ -465,14 +600,9 @@ function submitOrder(name, phone, pu, pack, btn) {
   });
 
   var f = document.createElement('form');
-  f.method = 'POST';
-  f.action = SCRIPT_URL;
-  f.target = 'hiddenFrame';
-  f.style.display = 'none';
+  f.method = 'POST'; f.action = SCRIPT_URL; f.target = 'hiddenFrame'; f.style.display = 'none';
   var inp = document.createElement('input');
-  inp.type = 'hidden';
-  inp.name = 'data';
-  inp.value = payload;
+  inp.type = 'hidden'; inp.name = 'data'; inp.value = payload;
   f.appendChild(inp);
   document.body.appendChild(f);
   f.submit();
@@ -480,6 +610,7 @@ function submitOrder(name, phone, pu, pack, btn) {
 
   setTimeout(function() {
     document.getElementById('mainView').style.display = 'none';
+    document.getElementById('cartBar').classList.remove('visible');
     document.getElementById('successPage').classList.add('show');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, 2000);
